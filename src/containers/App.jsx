@@ -39,7 +39,10 @@ const App = () => {
 
       <Categories title='Originales de Platzi Video'>
         <Carousel>
-          <CarouselItem />
+          {videos.originals.map((item) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <CarouselItem key={item.id} {...item} />
+          ))}
         </Carousel>
       </Categories>
 
