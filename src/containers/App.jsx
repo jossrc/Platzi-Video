@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import '../assets/styles/App.scss';
 
@@ -9,43 +9,55 @@ import Carousel from '../components/Carousel';
 import CarouselItem from '../components/CarouselItem';
 import Footer from '../components/Footer';
 
-const App = () => (
-  <div className='App'>
-    <Header />
-    <Search />
+const App = () => {
+  const [videos, setVideos] = useState([]);
 
-    <Categories title='Mi Lista'>
-      <Carousel>
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-      </Carousel>
-    </Categories>
+  useEffect(() => {
+    fetch('http://localhost:3000/initialState')
+      .then((response) => response.json())
+      .then((data) => setVideos(data));
+  }, []);
 
-    <Categories title='Tendencias'>
-      <Carousel>
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-      </Carousel>
-    </Categories>
+  console.log(videos);
 
-    <Categories title='Originales de Platzi Video'>
-      <Carousel>
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-      </Carousel>
-    </Categories>
+  return (
+    <div className='App'>
+      <Header />
+      <Search />
 
-    <Footer />
-  </div>
-);
+      <Categories title='Mi Lista'>
+        <Carousel>
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+        </Carousel>
+      </Categories>
+
+      <Categories title='Tendencias'>
+        <Carousel>
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+        </Carousel>
+      </Categories>
+
+      <Categories title='Originales de Platzi Video'>
+        <Carousel>
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+          <CarouselItem />
+        </Carousel>
+      </Categories>
+
+      <Footer />
+    </div>
+  );
+};
 
 export default App;
