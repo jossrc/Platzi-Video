@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import '../assets/styles/App.scss';
 
@@ -9,22 +9,14 @@ import Carousel from '../components/Carousel';
 import CarouselItem from '../components/CarouselItem';
 import Footer from '../components/Footer';
 
+import useInitialState from '../hooks/useInitialState';
+
 const App = () => {
-  const [videos, setVideos] = useState({
-    mylist: [],
-    trends: [],
-    originals: [],
-  });
 
-  useEffect(() => {
-    fetch('http://localhost:3000/initialState')
-      .then((response) => response.json())
-      .then((data) => setVideos(data));
-  }, []);
+  const API = 'http://localhost:3000/initialState';
+  const videos = useInitialState(API);
 
-  console.log(videos);
-
-  return (
+  return videos.length === 0 ? <h1>Loading...</h1> : (
     <div className='App'>
       <Header />
       <Search />
@@ -39,6 +31,7 @@ const App = () => {
       <Categories title='Tendencias'>
         <Carousel>
           {videos.trends.map((item) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
             <CarouselItem key={item.id} {...item} />
           ))}
         </Carousel>
